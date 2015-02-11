@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc overview
- * @name micahwoodApp
+ * @name cipherApp
  * @description
- * # micahwoodApp
+ * # cipherApp
  *
  * Main module of the application.
  */
 angular
-  .module('micahwoodApp', []);
+  .module('cipherApp', []);

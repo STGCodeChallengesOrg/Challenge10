@@ -1,23 +1,41 @@
 <div class="jumbotron">
-  <h1>'Allo, 'Allo!</h1>
+  <h1>Keyword Transposition Cipher</h1>
   <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-    Always a pleasure scaffolding your apps.
+    Enter your ciphertext and the keyword used to encipher it in the approriate fields and click <strong>Decipher</strong>.
   </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#/">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
+  <form class="form-horizontal" name="cipherForm" ng-submit="vm.decipher(cipherForm.$valid)" novalidate>
+    <div class="form-group" ng-class="{'has-error': cipherForm.keyword.$invalid && !cipherForm.keyword.$pristine}">
+      <label for="keyword" class="col-sm-2 control-label">Keyword</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="keyword" name="keyword"
+            ng-model="vm.keyword" ng-pattern="vm.word" required>
+        <p class="help-block" ng-show="cipherForm.keyword.$error.pattern">
+          Please only enter a single word with no numbers or special characters
+        </p>
+        <p class="help-block" ng-show="cipherForm.keyword.$error.required && !cipherForm.keyword.$pristine">
+          Secret is required
+        </p>
+      </div>
+    </div>
+    <div class="form-group" ng-class="{'has-error': cipherForm.ciphertext.$invalid && !cipherForm.ciphertext.$pristine}">
+      <label for="ciphertext" class="col-sm-2 control-label">Ciphertext</label>
+      <div class="col-sm-10">
+        <textarea class="form-control" id="ciphertext" name="ciphertext" rows="3"
+            ng-model="vm.ciphertext" ng-pattern="vm.validChars" required></textarea>
+        <p class="help-block" ng-show="cipherForm.ciphertext.$error.pattern">
+          Please only enter letters
+        </p>
+        <p class="help-block" ng-show="cipherForm.ciphertext.$error.required && !cipherForm.ciphertext.$pristine">
+          Ciphertext is required
+        </p>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-lg btn-success" ng-disabled="cipherForm.$invalid">
+      Decipher <span class="glyphicon glyphicon-play"></span>
+    </button>
+  </form>
 </div>
-
-<div class="row marketing">
-  <h4>HTML5 Boilerplate</h4>
-  <p>
-    HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
-  </p>
-
-  <h4>Angular</h4>
-  <p>
-    AngularJS is a toolset for building the framework most suited to your application development.
-  </p>
-
-  <h4>Karma</h4>
-  <p>Spectacular Test Runner for JavaScript.</p>
+<div class="alert alert-success" ng-if="vm.output">
+  <p>The message was deciphered correctly!</p>
+  <h3>{{ vm.output }}</h3>
 </div>
