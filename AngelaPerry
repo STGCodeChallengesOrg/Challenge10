@@ -1,0 +1,125 @@
+<?php
+class Cipher {
+	private $alphabet;
+	
+	private function setAlphabet() {
+		$this->alphabet = str_split("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+	}
+	
+	private function validateKey($key) {
+		$cleankey = preg_replace('/[^A-Z]/', "", strtoupper($key));
+		if(strlen($cleankey) > 0)
+			return $cleankey;
+		else
+			return false;
+	}
+	
+	private function validateMessage($message) {
+		if(strlen($message) > 0)
+			return htmlspecialchars(strtoupper($message));
+		else
+			return false;
+	}
+	
+	private function createCipher($key) {
+		$cipher = array();
+		$newalpha = array();
+		
+		//Remove duplicate letters in key
+		$cleankey = array_values(array_unique(str_split($key)));
+
+		//Remove key letters from alphabet
+		$trimmedalpha = array_values(array_diff($this->alphabet, $cleankey));
+
+		//Create multidimensional cipher
+		$i = 0;
+		$numrows = ceil(count($trimmedalpha)/count($cleankey));
+		for($j = 0; $j < $numrows; $j++) {
+			foreach($cleankey as $value) {
+				if(isset($trimmedalpha[$i])) {
+					$cipher[$value][$j] = $trimmedalpha[$i];
+					$i++;
+				}
+			}
+		}
+		ksort($cipher);
+
+		//Output substitution alphabet order
+		foreach($cipher as $index=>$value) {
+			$newalpha[] = $index;
+			foreach($value as $letter) {
+				$newalpha[] = $letter;
+			}
+		}
+		return $newalpha;
+	}
+
+	private function encoder($key) {
+		$encoder = array();
+		$newalpha = $this->createCipher($key);
+		//Align alphabet with substitution alphabet
+		for($i = 0; $i < count($this->alphabet); $i++) {
+			$encoder[$this->alphabet[$i]] = $newalpha[$i];
+		}
+		return $encoder;
+	}
+
+	private function decoder($key) {
+		$decoder = array();
+		$newalpha = $this->createCipher($key);
+		//Align alphabet with substitution alphabet
+		for($i = 0; $i < count($this->alphabet); $i++) {
+			$decoder[$newalpha[$i]] = $this->alphabet[$i];
+		}
+		return $decoder;
+	}
+
+	public function translateMessage($key, $message, $type) {
+		$this->setAlphabet();
+		
+		//Validate input
+		$validkey = $this->validateKey($key);
+		$validmessage = $this->validateMessage($message);
+		
+		if($validkey !== FALSE && $validmessage !== FALSE) {
+			//Get cipher
+			if($type == "Encode")
+				$translator = $this->encoder($validkey);
+			else
+				$translator = $this->decoder($validkey);
+			
+			//Translate message
+			$result = "";
+			$messageletters = str_split($validmessage);
+			foreach($messageletters as $messageletter) {
+				if(isset($translator[$messageletter]))
+					$result .= $translator[$messageletter];
+				else
+					$result .= $messageletter;
+			}
+		} else {
+			$result = "Invalid input.";
+		}
+		
+		return $result;
+	}
+}
+
+$result = "";
+
+if(isset($_POST['encode']) || isset($_POST['decode'])) {
+	$coded = new Cipher();
+	$result = $coded->translateMessage($_POST['key'], $_POST['message'], isset($_POST['encode']) ? $_POST['encode'] : $_POST['decode']);
+}
+?>
+<html>
+<body>
+<form action="CodeChallenge10" method="post">
+<label>Cipher key (max 7 characters):</label><br /><input name="key" type="password" maxlength=7 />
+<br /><label>Message (max 255 characters):</label><br /><input name="message" type="text" maxlength=255 />
+<br /><input type="submit" name="encode" value="Encode" />
+<input type="submit" name="decode" value="Decode" />
+</form>
+<p><?php echo $result; ?></p>
+</body>
+</html>
