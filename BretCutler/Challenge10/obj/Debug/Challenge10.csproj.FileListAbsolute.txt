@@ -1,0 +1,9 @@
+D:\Users\Bret\Documents\Visual Studio 2013\Projects\STGCodingChallenge\Challenge10\Challenge10\bin\Debug\Challenge10.exe.config
+D:\Users\Bret\Documents\Visual Studio 2013\Projects\STGCodingChallenge\Challenge10\Challenge10\bin\Debug\Challenge10.exe
+D:\Users\Bret\Documents\Visual Studio 2013\Projects\STGCodingChallenge\Challenge10\Challenge10\bin\Debug\Challenge10.pdb
+D:\Users\Bret\Documents\Visual Studio 2013\Projects\STGCodingChallenge\Challenge10\Challenge10\obj\Debug\Challenge10.csprojResolveAssemblyReference.cache
+D:\Users\Bret\Documents\Visual Studio 2013\Projects\STGCodingChallenge\Challenge10\Challenge10\obj\Debug\Challenge10.frmMain.resources
+D:\Users\Bret\Documents\Visual Studio 2013\Projects\STGCodingChallenge\Challenge10\Challenge10\obj\Debug\Challenge10.Properties.Resources.resources
+D:\Users\Bret\Documents\Visual Studio 2013\Projects\STGCodingChallenge\Challenge10\Challenge10\obj\Debug\Challenge10.csproj.GenerateResource.Cache
+D:\Users\Bret\Documents\Visual Studio 2013\Projects\STGCodingChallenge\Challenge10\Challenge10\obj\Debug\Challenge10.exe
+D:\Users\Bret\Documents\Visual Studio 2013\Projects\STGCodingChallenge\Challenge10\Challenge10\obj\Debug\Challenge10.pdb
